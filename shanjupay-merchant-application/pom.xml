@@ -100,6 +100,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--mapstruct依赖 -->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-jdk8</artifactId>

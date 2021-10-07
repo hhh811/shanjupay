@@ -1,4 +1,7 @@
 com\shanjupay\merchant\MerchantApplicationBootstrap.class
 com\shanjupay\merchant\config\SwaggerConfiguration.class
+com\shanjupay\merchant\vo\MerchantRegisterVO.class
+com\shanjupay\merchant\service\SmsService.class
 com\shanjupay\merchant\config\WebMvcConfig.class
 com\shanjupay\merchant\controller\MerchantController.class
+com\shanjupay\merchant\service\SmsServiceImp.class
