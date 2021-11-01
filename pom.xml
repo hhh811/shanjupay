@@ -12,6 +12,9 @@
         <module>shanjupay-common</module>
         <module>shanjupay-merchant</module>
         <module>shanjupay-merchant-application</module>
+        <module>shanjupay_transaction</module>
+        <module>shanjupay-transaction-service</module>
+        <module>shanjupay-transaction</module>
     </modules>
 
     <parent>

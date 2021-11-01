@@ -14,7 +14,7 @@ public class MerchantRegisterVO implements Serializable {
     private String mobile;
 
     @ApiModelProperty("商户用户名")
-    private String username;
+    private String userName;
 
     @ApiModelProperty("商户密码")
     private String password;

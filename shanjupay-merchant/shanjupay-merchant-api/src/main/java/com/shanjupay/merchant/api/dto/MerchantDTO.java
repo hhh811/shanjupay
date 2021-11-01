@@ -35,7 +35,7 @@ public class MerchantDTO implements Serializable {
     private String idCardAfterImg;
 
     @ApiModelProperty("联系人")
-    private String username;
+    private String userName;
 
     @ApiModelProperty("密码")
     private String password;
