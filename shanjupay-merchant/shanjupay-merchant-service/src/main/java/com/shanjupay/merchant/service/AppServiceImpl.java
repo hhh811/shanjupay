@@ -12,7 +12,6 @@ import com.shanjupay.merchant.entity.App;
 import com.shanjupay.merchant.entity.Merchant;
 import com.shanjupay.merchant.mapper.AppMapper;
 import com.shanjupay.merchant.mapper.MerchantMapper;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.models.auth.In;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;

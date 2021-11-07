@@ -2,12 +2,15 @@ E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-s
 E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-service\src\main\java\com\shanjupay\merchant\mapper\MerchantMapper.java
 E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-service\src\main\java\com\shanjupay\merchant\mapper\StoreStaffMapper.java
 E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-service\src\main\java\com\shanjupay\merchant\config\MybatisPlusConfig.java
+E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-service\src\main\java\com\shanjupay\merchant\service\AppServiceImpl.java
 E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-service\src\main\java\com\shanjupay\merchant\mapper\StoreMapper.java
 E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-service\src\main\java\com\shanjupay\merchant\entity\App.java
 E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-service\src\main\java\com\shanjupay\merchant\entity\Staff.java
 E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-service\src\main\java\com\shanjupay\merchant\entity\Merchant.java
 E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-service\src\main\java\com\shanjupay\merchant\entity\StoreStaff.java
+E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-service\src\main\java\com\shanjupay\merchant\convert\MerchantConvert.java
 E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-service\src\main\java\com\shanjupay\merchant\service\MerchantServiceImpl.java
+E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-service\src\main\java\com\shanjupay\merchant\convert\AppConvert.java
 E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-service\src\main\java\com\shanjupay\merchant\entity\Store.java
 E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-service\src\main\java\com\shanjupay\merchant\mapper\AppMapper.java
 E:\ai\java_study\projects\copy\shanjupay\shanjupay-merchant\shanjupay-merchant-service\src\main\java\com\shanjupay\merchant\mapper\StaffMapper.java

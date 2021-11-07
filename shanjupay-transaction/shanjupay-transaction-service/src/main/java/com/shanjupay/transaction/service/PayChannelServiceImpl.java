@@ -138,6 +138,42 @@ public class PayChannelServiceImpl implements PayChannelService {
     }
 
     /**
+     * 获取指定应用指定服务类型下所包含的原始支付渠道参数列表
+     *
+     * @param appId
+     * @param platformChannel
+     * @return
+     * @throws BusinessException
+     */
+    @Override
+    public List<PayChannelParamDTO> queryPayChannelParamByAppAndPlatform(String appId, String platformChannel) throws BusinessException {
+        // 查出应用 id 和服务类型代码在 app_platform_channel 主键
+        Long appPlatformChannelId = selectIdByAppPlatformChannel(appId, platformChannel);
+        // 根据 appPlatformChannelId 从 pay_channel_param 查询所有支付参数
+        List<PayChannelParam> payChannelParams = payChannelParamMapper.selectList(new LambdaQueryWrapper<PayChannelParam>()
+                .eq(PayChannelParam::getAppPlatformChannelId, appPlatformChannelId));
+        return PayChannelParamConvert.INSTANCE.listentity2listdto(payChannelParams);
+    }
+
+    /**
+     * 获取指定应用指定服务类型下所包含的某个原始支付参数
+     *
+     * @param appId
+     * @param platformChannel
+     * @param payChannel
+     * @return
+     * @throws BusinessException
+     */
+    @Override
+    public PayChannelParamDTO queryParamByAppPlatformAndPayChannel(String appId, String platformChannel, String payChannel) throws BusinessException {
+        List<PayChannelParamDTO> payChannelParamDTOS = queryPayChannelParamByAppAndPlatform(appId, platformChannel);
+        return payChannelParamDTOS.stream()
+                .filter(payChannelParamDTO -> payChannelParamDTO.getPayChannel().equals(payChannel))
+                .findFirst()
+                .get();
+    }
+
+    /**
      * 根据 appId 和服务类型查询应用与服务类型绑定 id
      * @param appId
      * @param platformChannelCode
