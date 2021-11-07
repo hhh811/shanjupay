@@ -1,10 +1,14 @@
 package com.shanjupay.transaction.service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.additional.query.impl.LambdaQueryChainWrapper;
+import com.shanjupay.common.cache.Cache;
 import com.shanjupay.common.domain.BusinessException;
 import com.shanjupay.common.domain.CommonErrorCode;
+import com.shanjupay.common.util.RedisUtil;
 import com.shanjupay.transaction.api.PayChannelService;
 import com.shanjupay.transaction.api.dto.PayChannelDTO;
 import com.shanjupay.transaction.api.dto.PayChannelParamDTO;
@@ -23,7 +27,9 @@ import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class PayChannelServiceImpl implements PayChannelService {
@@ -39,6 +45,9 @@ public class PayChannelServiceImpl implements PayChannelService {
 
     @Autowired
     private PayChannelParamMapper payChannelParamMapper;
+
+    @Autowired
+    private Cache cache;
 
     /**
      * 获取平台服务类型
@@ -135,6 +144,29 @@ public class PayChannelServiceImpl implements PayChannelService {
             entity.setAppPlatformChannelId(appPlatformChannelId);
             payChannelParamMapper.insert(entity);
         }
+
+        // 保存到 redis
+        updateCache(payChannelParamDTO.getAppId(), payChannelParamDTO.getPlatformChannelCode());
+    }
+
+    private void updateCache(String appId, String platformChannel) {
+        // 处理 redis 缓存
+        // 1. key 的构建
+        String redisKey = RedisUtil.keyBuilder(appId, platformChannel);
+        // 2. 查询 redis, 检查 key 是否存在
+        Boolean exists = cache.exists(redisKey);
+        if (exists) {   // 存在，则清除
+            cache.del(redisKey);
+        }
+        // 3. 从数据库查询应用的服务类型对应的实际支付参数，并重新存入缓存
+        Long appPlatformChannelId = selectIdByAppPlatformChannel(appId, platformChannel);
+        if (appPlatformChannelId != null) {
+            // 根据 appPlatformChannelId 从 pay_channel_param 查询所有支付参数
+            List<PayChannelParam> payChannelParams = payChannelParamMapper.selectList(new LambdaQueryWrapper<PayChannelParam>()
+                    .eq(PayChannelParam::getAppPlatformChannelId, appPlatformChannelId));
+            List<PayChannelParamDTO> paramDTOS = PayChannelParamConvert.INSTANCE.listentity2listdto(payChannelParams);
+            cache.set(redisKey, JSON.toJSONString(paramDTOS).toString());
+        }
     }
 
     /**
@@ -147,12 +179,26 @@ public class PayChannelServiceImpl implements PayChannelService {
      */
     @Override
     public List<PayChannelParamDTO> queryPayChannelParamByAppAndPlatform(String appId, String platformChannel) throws BusinessException {
+        // 从缓存查询
+        // 1. key 的构建
+        String redisKey = RedisUtil.keyBuilder(appId, platformChannel);
+        Boolean exists = cache.exists(redisKey);
+        if (exists) {
+            String value = cache.get(redisKey);
+            return JSONObject.parseArray(value, PayChannelParamDTO.class);
+        }
         // 查出应用 id 和服务类型代码在 app_platform_channel 主键
         Long appPlatformChannelId = selectIdByAppPlatformChannel(appId, platformChannel);
+        if (appPlatformChannelId == null) {
+            return null;
+        }
         // 根据 appPlatformChannelId 从 pay_channel_param 查询所有支付参数
         List<PayChannelParam> payChannelParams = payChannelParamMapper.selectList(new LambdaQueryWrapper<PayChannelParam>()
                 .eq(PayChannelParam::getAppPlatformChannelId, appPlatformChannelId));
-        return PayChannelParamConvert.INSTANCE.listentity2listdto(payChannelParams);
+        List<PayChannelParamDTO> paramDTOS = PayChannelParamConvert.INSTANCE.listentity2listdto(payChannelParams);
+        // 存入缓存
+        updateCache(appId, platformChannel);
+        return paramDTOS;
     }
 
     /**

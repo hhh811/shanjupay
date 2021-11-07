@@ -30,6 +30,14 @@ public interface Cache {
      * @param key
      * @param value
      */
+    void set(String key, String value);
+
+    /**
+     * 简单的字符串设置
+     *
+     * @param key
+     * @param value
+     */
     void set(String key, String value, Integer expiration);
 
     /**

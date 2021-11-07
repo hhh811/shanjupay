@@ -4,6 +4,7 @@ import com.shanjupay.common.cache.Cache;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class RedisCache implements Cache {
 
@@ -18,12 +19,12 @@ public class RedisCache implements Cache {
      */
     @Override
     public Set<String> getKeys() {
-        return null;
+        return getKeys("");
     }
 
     @Override
     public Set<String> getKeys(String pattern) {
-        return null;
+        return redisTemplate.keys(pattern);
     }
 
     /**
@@ -34,7 +35,7 @@ public class RedisCache implements Cache {
      */
     @Override
     public Boolean exists(String key) {
-        return null;
+        return redisTemplate.hasKey(key);
     }
 
     /**
@@ -44,7 +45,18 @@ public class RedisCache implements Cache {
      */
     @Override
     public void del(String key) {
+        redisTemplate.delete(key);
+    }
 
+    /**
+     * 简单的字符串设置
+     *
+     * @param key
+     * @param value
+     */
+    @Override
+    public void set(String key, String value) {
+        redisTemplate.opsForValue().set(key, value);
     }
 
     /**
@@ -56,7 +68,7 @@ public class RedisCache implements Cache {
      */
     @Override
     public void set(String key, String value, Integer expiration) {
-
+        redisTemplate.opsForValue().set(key, value, expiration, TimeUnit.SECONDS);
     }
 
     /**
@@ -67,7 +79,7 @@ public class RedisCache implements Cache {
      */
     @Override
     public String get(String key) {
-        return null;
+        return redisTemplate.opsForValue().get(key);
     }
 
     /**
@@ -78,7 +90,7 @@ public class RedisCache implements Cache {
      */
     @Override
     public void expire(String key, int expire) {
-
+        redisTemplate.expire(key, expire, TimeUnit.SECONDS);
     }
 
     /**
@@ -89,7 +101,7 @@ public class RedisCache implements Cache {
      */
     @Override
     public void append(String key, String value) {
-
+        redisTemplate.opsForValue().append(key, value);
     }
 
     /**
@@ -101,7 +113,7 @@ public class RedisCache implements Cache {
      */
     @Override
     public String getset(String key, String newValue) {
-        return null;
+        return redisTemplate.opsForValue().getAndSet(key, newValue);
     }
 
     /**
@@ -113,7 +125,7 @@ public class RedisCache implements Cache {
      */
     @Override
     public boolean setnx(String key, String value) {
-        return false;
+        return redisTemplate.opsForValue().setIfAbsent(key, value);
     }
 
     /**
@@ -124,6 +136,6 @@ public class RedisCache implements Cache {
      */
     @Override
     public Long incrBy(String key, Long delta) {
-        return null;
+        return redisTemplate.opsForValue().increment(key, delta);
     }
 }
