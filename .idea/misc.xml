@@ -9,6 +9,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/shanjupay-gateway-service/pom.xml" />
         <option value="$PROJECT_DIR$/shanjupay-merchant-api/pom.xml" />
         <option value="$PROJECT_DIR$/shanjupay-transaction-service/pom.xml" />
       </set>

@@ -10,8 +10,9 @@
         <module name="shanjupay-merchant-api" />
         <module name="shanjupay-merchant-service" />
         <module name="shanjupay-transaction-api" />
-        <module name="shanjupay-merchant-application" />
         <module name="shanjupay-common" />
+        <module name="shanjupay-gateway-service" />
+        <module name="shanjupay-merchant-application" />
         <module name="shanjupay-transaction-service" />
       </profile>
     </annotationProcessing>
@@ -20,6 +21,8 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="shanjupay" options="" />
       <module name="shanjupay-common" options="-parameters" />
+      <module name="shanjupay-gateway" options="" />
+      <module name="shanjupay-gateway-service" options="-parameters" />
       <module name="shanjupay-merchant" options="" />
       <module name="shanjupay-merchant-api" options="-parameters" />
       <module name="shanjupay-merchant-application" options="-parameters" />

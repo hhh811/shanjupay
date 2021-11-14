@@ -15,6 +15,8 @@
         <module>shanjupay_transaction</module>
         <module>shanjupay-transaction-service</module>
         <module>shanjupay-transaction</module>
+        <module>shanjupay-gateway</module>
+        <module>shanjupay-gateway-service</module>
     </modules>
 
     <parent>
