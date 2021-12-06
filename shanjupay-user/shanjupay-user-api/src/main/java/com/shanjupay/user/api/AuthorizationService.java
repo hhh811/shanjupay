@@ -6,6 +6,7 @@ import com.shanjupay.user.api.dto.authorization.AuthorizationInfoDTO;
 import com.shanjupay.user.api.dto.authorization.PrivilegeDTO;
 import com.shanjupay.user.api.dto.authorization.PrivilegeTreeDTO;
 import com.shanjupay.user.api.dto.authorization.RoleDTO;
+import com.shanjupay.user.api.dto.tenant.AccountRoleDTO;
 
 import java.util.List;
 import java.util.Map;

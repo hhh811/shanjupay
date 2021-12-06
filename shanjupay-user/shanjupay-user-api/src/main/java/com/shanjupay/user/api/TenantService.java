@@ -63,7 +63,7 @@ public interface TenantService {
      * @return
      * @throws BusinessException
      */
-    List<TenantDTO> queryBundleByTenantType(String tenantType) throws BusinessException;
+    List<BundleDTO> queryBundleByTenantType(String tenantType) throws BusinessException;
 
     ////////////////////套餐管理start/////////////////////
 

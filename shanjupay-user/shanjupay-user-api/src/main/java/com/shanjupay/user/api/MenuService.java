@@ -45,5 +45,5 @@ public interface MenuService {
      * @return
      * @throws BusinessException
      */
-    List<MenuDTO> queryMenuByPrivileged(String[] privileges) throws BusinessException;
+    List<MenuDTO> queryMenuByPrivileges(String[] privileges) throws BusinessException;
 }
