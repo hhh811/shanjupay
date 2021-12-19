@@ -23,6 +23,7 @@ public class ResourceDTO  implements Serializable {
     String applicationName;
 
     @ApiModelProperty("应用包含资源，按资源类型分包括菜单等资源信息 如  menu:JSONObject")
-    Map<String,Object> appRes = new HashMap<>(); //按资源类型分包括菜单等资源信息 如  menu:JSONObject
-
+    Map<String, Object> appRes = new HashMap<>();
+    //按资源类型分包括菜单等资源信息 如  menu:JSONObject
+}
 

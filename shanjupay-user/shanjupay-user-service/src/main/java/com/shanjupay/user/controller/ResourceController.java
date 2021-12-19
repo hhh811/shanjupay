@@ -62,7 +62,7 @@ public class ResourceController {
 
     @ApiOperation("分页条件应用编码查找应用")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "query", value = "租户检索参数", required = true, dataType = "ApplicationQueryPamams", paramType = "body"),
+            @ApiImplicitParam(name = "query", value = "租户检索参数", required = true, dataType = "ApplicationQueryParams", paramType = "body"),
             @ApiImplicitParam(name = "pageNo", value = "页码", required = true, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "pageSize", value = "每页记录数", required = true, dataType = "int", paramType = "query")
     })
@@ -89,14 +89,14 @@ public class ResourceController {
     }
 
     @ApiOperation("根据ID查询菜单")
-    @ApiImplicitParam(name = "id", value = "菜单Id", required = true, dataType = "Long", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "菜单Id", required = true, dataType = "Long", paramType = "path", example = "1")
     @GetMapping("/menus/{id}")
     public MenuDTO queryMenu(@PathVariable Long id) {
         return menuService.queryMenu(id);
     }
 
     @ApiOperation("根据应用编码查询菜单列表")
-    @ApiImplicitParam(name = "applicationCode", value = "应用编码", required = true, dataType = "Long", paramType = "path")
+    @ApiImplicitParam(name = "applicationCode", value = "应用编码", required = true, dataType = "Long", paramType = "path", example = "1")
     @GetMapping("/menus/{applicationCode}/menu-list")
     public List<MenuDTO> queryMenuByApplicationCode(@PathVariable String applicationCode) {
         return menuService.queryMenuByApplicationCode(applicationCode);

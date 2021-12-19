@@ -26,7 +26,7 @@ public interface AuthorizationRoleMapper extends BaseMapper<AuthorizationRole> {
      */
     @Insert("<script>" +
             "INSERT INTO authorization_role(NAME,CODE,TENANT_ID) VALUES " +
-            "<foreach collection='roles' item='item' separator=','>(#{item.name},#{item.code},#{tenantId})</foreach " +
+            "<foreach collection='roles' item='item' separator=','>(#{item.name},#{item.code},#{tenantId})</foreach> " +
             "</script>")
     @Options(useGeneratedKeys = true, keyProperty = "roles.id")
     void createRoles(@Param("tenantId") Long tenantId, @Param("roles") List<AuthorizationRole> roles);

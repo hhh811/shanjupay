@@ -82,7 +82,7 @@ public class TenantController {
 
     @ApiOperation("切换租户套餐")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "tenantId", value = "租户id", required = true, dataType = "Long", paramType = "path"),
+            @ApiImplicitParam(name = "tenantId", value = "租户id", required = true, dataType = "Long", paramType = "path", example = "1"),
             @ApiImplicitParam(name = "bundleCode", value = "套餐编码", required = true, dataType = "String", paramType = "path")
     })
     @PutMapping("/tenants/{tenantId}/bundles/{bundleCode}")
@@ -92,7 +92,7 @@ public class TenantController {
 
     @ApiOperation("初始化租户套餐")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "tenantId", value = "租户id", required = true, dataType = "Long", paramType = "path"),
+            @ApiImplicitParam(name = "tenantId", value = "租户id", required = true, dataType = "Long", paramType = "path", example = "1"),
             @ApiImplicitParam(name = "bundleCode", value = "套餐编码", required = true, dataType = "String", paramType = "path")
     })
     @PostMapping("/tenants/{tenantId}/bundles/{bundleCode}")
@@ -143,7 +143,7 @@ public class TenantController {
 
     @ApiOperation("将已存在账号，加入到某租户")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "tenantId", value = "租户id", required = true, dataType = "Long", paramType = "path"),
+            @ApiImplicitParam(name = "tenantId", value = "租户id", required = true, dataType = "Long", paramType = "path", example = "1"),
             @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String", paramType = "path")
     })
     @PostMapping("/bind/accounts/{username}/tenants/{tenantId}")
@@ -153,7 +153,7 @@ public class TenantController {
 
     @ApiOperation("将某账号从租户内移除，租户管理员不可移除")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "tenantId", value = "租户id", required = true, dataType = "Long", paramType = "path"),
+            @ApiImplicitParam(name = "tenantId", value = "租户id", required = true, dataType = "Long", paramType = "path", example = "1"),
             @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String", paramType = "path")
     })
     @Delete("/unbind/accounts/{username}/tenants/{tenantId}")
@@ -192,7 +192,7 @@ public class TenantController {
 
     @ApiOperation("根据用户名判断账号是否在某租户内")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "tenantId", value = "租户id", required = true, dataType = "Long", paramType = "path"),
+            @ApiImplicitParam(name = "tenantId", value = "租户id", required = true, dataType = "Long", paramType = "path", example = "1"),
             @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String", paramType = "path")
     })
     @GetMapping("/exist/accounts/{username}/tenants/{tenantId}")
@@ -202,7 +202,7 @@ public class TenantController {
 
     @ApiOperation("根据手机号判断账号是否在某租户内")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "tenantId", value = "租户id", required = true, dataType = "Long", paramType = "path"),
+            @ApiImplicitParam(name = "tenantId", value = "租户id", required = true, dataType = "Long", paramType = "path", example = "1"),
             @ApiImplicitParam(name = "mobile", value = "手机号", required = true, dataType = "String", paramType = "path")
     })
     @GetMapping("/exist/accounts/tenants/{tenantId}/mobiles/{mobile}")
