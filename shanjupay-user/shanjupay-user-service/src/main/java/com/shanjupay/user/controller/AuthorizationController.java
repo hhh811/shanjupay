@@ -67,8 +67,8 @@ public class AuthorizationController {
             @ApiImplicitParam(name = "role", value = "角色信息", required = true, dataType = "RoleDTO", paramType = "body")
     })
     @PostMapping("/tenants/{tenantId}/roles")
-    public void createRole(@PathVariable Long tenantId, @RequestParam RoleDTO roleDTO) {
-        authService.createRole(tenantId, roleDTO);
+    public void createRole(@PathVariable Long tenantId, @RequestBody RoleDTO role) {
+        authService.createRole(tenantId, role);
     }
 
     @ApiOperation("根据角色编码删除租户内角色，如果有账号绑定该角色，禁止删除")
@@ -84,8 +84,8 @@ public class AuthorizationController {
     @ApiOperation("修改租户内角色（不包含权限）")
     @ApiImplicitParam(name = "role", value = "角色信息", required = true, dataType = "RoleDTO", paramType = "body")
     @PutMapping("/tenants/roles")
-    public void modifyRole(@RequestParam RoleDTO roleDTO) {
-        authService.modifyRole(roleDTO);
+    public void modifyRole(@RequestBody RoleDTO role) {
+        authService.modifyRole(role);
     }
 
     @ApiOperation("角色设置权限（清除+设置）")
@@ -111,7 +111,7 @@ public class AuthorizationController {
             @ApiImplicitParam(name = "tenantId", value = "租户id", required = true, dataType = "Long", paramType = "path", example = "1"),
             @ApiImplicitParam(name = "roleCodes", value = "角色编码", required = true, allowMultiple = true, dataType = "String", paramType = "query")
     })
-    @GetMapping("/tenants/tenants/{tenantId}")
+    @GetMapping("/roles/tenants/{tenantId}")
     public List<RoleDTO> queryRole(@PathVariable Long tenantId, @RequestParam String... roleCodes) {
         return authService.queryRole(tenantId, roleCodes);
     }
@@ -132,7 +132,7 @@ public class AuthorizationController {
             @ApiImplicitParam(name = "tenantId", value = "租户id", required = true, dataType = "Long", paramType = "path", example = "1"),
             @ApiImplicitParam(name = "roleCodes", value = "角色编码", required = true, allowMultiple = true, dataType = "String", paramType = "query")
     })
-    @PostMapping("/bind/tenants/{tenantId}/accounts/roles")
+    @PostMapping("/bind/tenants/{tenantId}/accounts/{username}/roles")
     public void bindAccountRole(@PathVariable String username, @PathVariable Long tenantId, @RequestParam String[] roleCodes) {
         authService.bindAccountRole(username, tenantId, roleCodes);
     }

@@ -115,7 +115,7 @@ public class ResourceServiceImpl implements ResourceService {
         String menus = JSON.toJSONString(resourceMenus);
         //3.获取应用下的按钮资源
         List<ResourceButton> resourceButtons = buttonMapper.selectList(new QueryWrapper<ResourceButton>()
-                .lambda().eq(ResourceButton::getApplicationCode, app).in(ResourceButton::getPrivilegeCode, privilegeCodes));
+                .lambda().eq(ResourceButton::getApplicationCode, applicationCode).in(ResourceButton::getPrivilegeCode, privilegeCodes));
         String buttons = JSON.toJSONString(resourceButtons);
         //4.组装应用的资源数据
         Map<String, Object> appRes = new HashMap<>();

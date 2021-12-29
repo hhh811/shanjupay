@@ -375,7 +375,7 @@ public class TenantServiceImpl implements TenantService {
         }
         LambdaUpdateWrapper<Account> qw = new LambdaUpdateWrapper<>();
         qw.eq(Account::getId, accountPwdDTO.getAccountId());
-        qw.eq(Account::getUsername, accountPwdDTO.getAccountId());
+        qw.eq(Account::getUsername, accountPwdDTO.getUserName());
         Account account = accountMapper.selectOne(qw);
         if (account == null) {
             throw new BusinessException(CommonErrorCode.E_100104);

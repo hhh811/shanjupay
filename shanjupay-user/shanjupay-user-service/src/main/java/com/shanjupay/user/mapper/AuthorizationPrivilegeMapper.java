@@ -15,13 +15,13 @@ public interface AuthorizationPrivilegeMapper extends BaseMapper<AuthorizationPr
     @Select("<script>" +
             "SELECT p.* FROM authorization_privilege p \n" +
             "\tLEFT JOIN authorization_role_privilege arp ON arp.PRIVILEGE_ID=p.ID\n" +
-            "\tLEFT JOIN authorization_role ON arp.ROLE_ID=r.ID\n" +
+            "\tLEFT JOIN authorization_role r ON arp.ROLE_ID=r.ID\n" +
             "\tWHERE r.ID IN <foreach collection='roleIds' item='item' open='(' separator=',' close=')'>#{item}</foreach>" +
             "</script>")
     List<AuthorizationPrivilege> selectPrivilegeByRole(@Param("roleIds") List<Long> roleIds);
 
     @Select("<script>" +
-            "select r.TENANT_ID, `CODE`, ROLE_CODE, p.`CODE` PRIVILEGE from authorization_privilege p " +
+            "select r.TENANT_ID, r.`CODE` ROLE_CODE, p.`CODE` PRIVILEGE_CODE from authorization_privilege p " +
             "LEFT JOIN authorization_role_privilege arp ON arp.PRIVILEGE_ID=p.ID " +
             "LEFT JOIN authorization_role r ON arp.ROLE_ID=r.ID " +
             "where r.ID IN <foreach collection='roleIds' item='item' open='(' separator=',' close=')'>#{item}</foreach> " +

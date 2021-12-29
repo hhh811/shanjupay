@@ -27,7 +27,7 @@ public interface AccountRoleMapper extends BaseMapper<AccountRole> {
             "account_role ar, authorization_role r " +
             "WHERE r.`CODE`=ar.ROLE_CODE " +
             "AND r.`TENANT_ID`=ar.`TENANT_ID` " +
-            "AND ar.USERNAME=#{username} " +
+            "AND ar.username=#{username} " +
             "AND ar.TENANT_ID in <foreach collection='ids' item='id' open='(' separator=',' close=')'>#{id}</foreach> " +
             "</script>")
     List<Long> selectRoleByUsernameInTenants(@Param("username") String username, @Param("ids") List<Long> ids);

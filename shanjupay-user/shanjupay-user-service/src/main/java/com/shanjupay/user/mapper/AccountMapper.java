@@ -62,7 +62,7 @@ public interface AccountMapper extends BaseMapper<Account> {
             "and t.ID in #{tenantQuery.tenantId} " +
             "</if>" +
             "</where>" +
-            "ORDERED BY #{sortBy} #{order} " +
+            "ORDER BY #{sortBy} #{order} " +
             "</script>")
     List<AccountDTO> selectAccountByPage(@Param("page") Page<AccountDTO> page, @Param("accountQuery")AccountQueryDTO accountQuery,
                                          @Param("sortBy") String sortBy, @Param("order") String order);
@@ -75,8 +75,8 @@ public interface AccountMapper extends BaseMapper<Account> {
 
     @Select("select a.* from account a " +
             "join tenant_account ta on ta.ACCOUNT_ID=a.ID " +
-            "join tenant t on t.ID=a.TENANT_ID " +
+            "join tenant t on t.ID=ta.TENANT_ID " +
             "where t.id=#{tenantId} " +
-            "AND ta.`ID_ADMIN`=1")
+            "AND ta.`IS_ADMIN`=1")
     Account selectAccountInfoByTenantId(@Param("tenantId") Long tenantId);
 }

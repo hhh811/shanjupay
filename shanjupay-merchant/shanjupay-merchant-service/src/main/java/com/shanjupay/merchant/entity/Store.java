@@ -19,7 +19,7 @@ public class Store {
     @TableField("PARENT_ID")
     private Long parentId;
     @TableField("STORE_STATUS")
-    private Integer storeStatus;
+    private Boolean storeStatus;
     @TableField("STORE_ADDRESS")
     private String storeAddress;
 

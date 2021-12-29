@@ -75,7 +75,7 @@ public class TenantController {
     }
 
     @ApiOperation("查询所有套餐")
-    @GetMapping("/bundles/{bundleCode}")
+    @GetMapping("/bundles/bundle-list")
     public List<BundleDTO> queryAllBundle() {
         return tenantService.queryAllBundle();
     }
@@ -253,7 +253,7 @@ public class TenantController {
 
     @ApiOperation("根据接入客户端获取应用")
     @ApiImplicitParam(name = "clientId", value = "客户端id", required = true, dataType = "String", paramType = "path")
-    @GetMapping("/apps/{clientId}")
+    @GetMapping("/account/apps/{clientId}")
     public ApplicationDTO getApplicationDTOByClientId(@PathVariable String clientId) {
         return tenantService.getApplicationDTOByClientId(clientId);
     }

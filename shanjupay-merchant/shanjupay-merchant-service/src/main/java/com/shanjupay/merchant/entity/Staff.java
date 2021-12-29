@@ -28,5 +28,5 @@ public class Staff {
     @TableField("LAST_LOGIN_TIME")
     private LocalDateTime lastLoginTime;
     @TableField("STAFF_STATUS")
-    private Integer staffStatus;
+    private Boolean staffStatus;
 }

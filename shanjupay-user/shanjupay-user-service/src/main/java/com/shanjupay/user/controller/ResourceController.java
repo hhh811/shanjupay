@@ -55,7 +55,7 @@ public class ResourceController {
 
     @ApiOperation("根据应用编码查找应用")
     @ApiImplicitParam(name = "applicationCode", value = "应用信息", required = true, dataType = "String", paramType = "path")
-    @GetMapping("/apps/{application}")
+    @GetMapping("/apps/{applicationCode}")
     public ApplicationDTO queryApplication(@PathVariable String applicationCode) {
         return resourceService.queryApplication(applicationCode);
     }
@@ -96,7 +96,7 @@ public class ResourceController {
     }
 
     @ApiOperation("根据应用编码查询菜单列表")
-    @ApiImplicitParam(name = "applicationCode", value = "应用编码", required = true, dataType = "Long", paramType = "path", example = "1")
+    @ApiImplicitParam(name = "applicationCode", value = "应用编码", required = true, dataType = "String", paramType = "path", example = "1")
     @GetMapping("/menus/{applicationCode}/menu-list")
     public List<MenuDTO> queryMenuByApplicationCode(@PathVariable String applicationCode) {
         return menuService.queryMenuByApplicationCode(applicationCode);

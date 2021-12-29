@@ -21,6 +21,7 @@ import com.shanjupay.user.entity.*;
 import com.shanjupay.user.mapper.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.common.utils.CollectionUtils;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -54,6 +55,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     public Map<Long, AuthorizationInfoDTO> authorize(String username, Long[] tenantIds) {
         List<Long> ids = Arrays.asList(tenantIds);
         List<Long> roleIds = accountRoleMapper.selectRoleByUsernameInTenants(username, ids);
+        if (CollectionUtils.isEmpty(ids)) {
+            return Collections.emptyMap();
+        }
         List<TenantRolePrivilegeDTO> list = privilegeMapper.selectPrivilegeRoleInTenant(roleIds);
         if (list == null) {
             throw new BusinessException(CommonErrorCode.E_100104);
@@ -270,16 +274,13 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             throw new BusinessException(CommonErrorCode.E_110005);
         }
         //组装权限id集合
-        List<Long> pids = new ArrayList<>();
-        for (AuthorizationPrivilege p : privileges) {
-            pids.add(p.getId());
-        }
+        List<Long> pids = privileges.stream().map(AuthorizationPrivilege::getId).collect(Collectors.toList());
         //3.删除角色已关联的权限信息
         if (roleDTO != null && roleDTO.getId() != null) {
             Long roleId = roleDTO.getId();
             //若角色已关联权限，清除
             rolePrivilegeMapper.delete(new QueryWrapper<AuthorizationRolePrivilege>().lambda()
-                    .eq(AuthorizationRolePrivilege::getId, roleId));
+                    .eq(AuthorizationRolePrivilege::getRoleId, roleId));
         }
         //4.将角色的权限进行关联操作authorization_role_privilege表
         rolePrivilegeMapper.insertRolePrivilege(roleDTO.getId(), pids);
@@ -362,13 +363,19 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         if (roles.isEmpty()) {
             throw new BusinessException(CommonErrorCode.E_100104);
         }
-        List<Long> roleIds = new ArrayList<>();
-        for (AuthorizationRole role : roles) {
-            Long id = role.getId();
-            roleIds.add(id);
-        }
+        List<Long> roleIds =roles.stream().map(AuthorizationRole::getId).collect(Collectors.toList());
         roleMapper.update(null, new UpdateWrapper<AuthorizationRole>().lambda()
                 .in(AuthorizationRole::getId, roleIds).set(AuthorizationRole::getTenantId, null));
+        // 根据账号-角色表id清除关系
+        List<AccountRole> accountRoles = accountRoleMapper.selectList(new QueryWrapper<AccountRole>().lambda()
+                .eq(AccountRole::getUsername, username).eq(AccountRole::getTenantId, tenantId)
+                .in(AccountRole::getRoleCode, roleList));
+        if (accountRoles.isEmpty()) {
+            throw new BusinessException(CommonErrorCode.E_100104);
+        }
+        List<Long> ids = accountRoles.stream().map(AccountRole::getId).collect(Collectors.toList());
+        accountRoleMapper.update(null, new UpdateWrapper<AccountRole>().lambda()
+                .in(AccountRole::getId, ids).set(AccountRole::getRoleCode, null));
     }
 
     @Override
