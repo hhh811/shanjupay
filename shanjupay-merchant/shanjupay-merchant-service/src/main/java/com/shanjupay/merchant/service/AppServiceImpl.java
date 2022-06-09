@@ -1,5 +1,6 @@
 package com.shanjupay.merchant.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.shanjupay.common.domain.BusinessException;
 import com.shanjupay.common.domain.CommonErrorCode;
@@ -104,6 +105,7 @@ public class AppServiceImpl implements AppService {
      */
     @Override
     public Boolean queryAppInMerchant(String appId, Long merchantId) {
-        return null;
+        Integer count = appMapper.selectCount(new LambdaQueryWrapper<App>().eq(App::getAppId, appId).eq(App::getMerchantId, merchantId));
+        return count > 0;
     }
 }
